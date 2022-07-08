@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_margin="25dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/title_masuk"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="100dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edlgnemail"
+            android:hint="@string/title_email"
+            android:layout_marginBottom="20dp"
+            android:ems="10">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edlgnpass"
+            android:hint="@string/title_sandi"
+            android:layout_marginBottom="20dp"
+            android:ems="10">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lupa Kata Sandi ?"
+            android:gravity="right"
+            android:id="@+id/tvlgnlupa"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:id="@+id/pgmasuk"/>
+
+            <Button
+                android:id="@+id/btnlmasuk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_masuk"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ATAU"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:layout_margin="5dp"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Buat Akun Baru"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textAllCaps="true"
+            android:id="@+id/btnldaftar"/>
+    </LinearLayout>
+</RelativeLayout>

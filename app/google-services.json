@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "680560369366",
+    "project_id": "sahabat-toko",
+    "storage_bucket": "sahabat-toko.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680560369366:android:168a42a8a619eb69413377",
+        "android_client_info": {
+          "package_name": "com.andyra.sahabattoko"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680560369366-045c61qf3n9cbp459qi93iv3rmtm7hrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe5CruSA69SUZzMm6XHUgP81ulArfwoN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "680560369366-045c61qf3n9cbp459qi93iv3rmtm7hrs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

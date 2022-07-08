@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/activity_registrasi.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/fragment__list__transaksi.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/fragment_hapus_barang.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/fragment_list__barang.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/fragment_list_barang.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_pembelian_barang.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_tambah__transaksi.xml" value="0.17119565217391305" />
+        <entry key="app/src/main/res/layout/fragment_ubah_password.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_barang.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/navbar_header.xml" value="0.25" />
+        <entry key="app/src/main/res/menu/menu_navigasi.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

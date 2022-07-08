@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item android:title="Barang">
+        <menu>
+            <item
+                android:id="@+id/nav_list_brg"
+                android:icon="@drawable/ic_round_storage_12"
+                android:title="@string/list_brg" />
+            <item
+                android:id="@+id/nav_tmbh_brg"
+                android:icon="@drawable/ic_baseline_add_circle_outline_12"
+                android:title="@string/title_tambah_brg" />
+            <item
+                android:id="@+id/nav_hps_brg"
+                android:icon="@drawable/ic_round_delete_forever_12"
+                android:title="@string/title_hapus_brg" />
+        </menu>
+    </item>
+    <item android:title="Transaksi">
+        <menu>
+            <item
+                android:id="@+id/nav_list_trx"
+                android:icon="@drawable/ic_baseline_list_alt_12"
+                android:title="@string/title_list_trx" />
+            <item
+                android:id="@+id/nav_tmbh_trx"
+                android:icon="@drawable/ic_baseline_post_add_12"
+                android:title="@string/title_tambah_trx" />
+            <item
+                android:id="@+id/nav_hps_trx"
+                android:icon="@drawable/ic_baseline_delete_sweep_12"
+                android:title="@string/title_hapus_trx" />
+        </menu>
+    </item>
+    <item android:title="Lainnya">
+        <menu>
+            <item
+                android:id="@+id/nav_ubah_sandi"
+                android:icon="@drawable/ic_outline_vpn_key_12"
+                android:title="@string/title_ubah_sandi" />
+            <item
+                android:id="@+id/nav_tentang"
+                android:icon="@drawable/ic_baseline_list_alt_12"
+                android:title="@string/title_tentang_apk" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_baseline_logout_12"
+                android:title="@string/title_logout" />
+            <item
+                android:id="@+id/nav_out"
+                android:icon="@drawable/ic_outline_close_24"
+                android:title="@string/title_exit" />
+        </menu>
+    </item>
+</menu>

@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Sahabat Toko</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_daftar">Daftar</string>
+    <string name="title_masuk">Masuk</string>
+
+    <string name="titlen_toko">Nama Toko</string>
+    <string name="title_email">Alamat Email</string>
+    <string name="title_sandi">Kata Sandi</string>
+
+    <string name="error_email">Mohon Masukkan Email Valid</string>
+    <string name="error_pass">Kata Sandi Harus Lebih Dari 8 Karakter</string>
+
+
+    <string name="list_brg">Daftar Barang</string>
+    <string name="title_tambah_brg">Tambah Barang</string>
+    <string name="title_hapus_brg">Hapus Barang</string>
+
+    <string name="title_list_trx">Daftar Transaksi</string>
+    <string name="title_tambah_trx">Tambah Transaksi</string>
+    <string name="title_hapus_trx">Hapus Transaksi</string>
+
+    <string name="title_ubah_sandi">Ubah Kata Sandi</string>
+    <string name="title_tentang_apk">Tentang Aplikasi</string>
+    <string name="title_logout">Keluar Akun</string>
+    <string name="title_exit">Keluar Aplikasi</string>
+
+
+    <!-- Barang -->
+    <string name="title_no">No</string>
+    <string name="title_tglbeli">Tanggal Pembelian</string>
+    <string name="title_namabrg">Nama Barang</string>
+    <string name="title_ktgrbrg">Kategori Barang</string>
+    <string name="title_jmlhbrg">Jumlah Barang</string>
+    <string name="title_ttlbeli">Total Biaya Pembelian (Rp)</string>
+    <string name="title_hrgbeli">Harga Beli per Item (Rp)</string>
+    <string name="title_hrgjual">Harga Jual per Item(Rp)</string>
+
+    <string name="title_untung">Keuntungan per Satuan</string>
+    <string name="title_persenuntung">Persentase Keuntungan</string>
+    <string name="title_totaluntung">Total keuntungan</string>
+
+    <string name="title_nmbrg">Nama</string>
+    <string name="title_ktbrg">Kategori</string>
+    <string name="title_stokhbrg">Stok</string>
+    <string name="title_hrgbrg">Harga</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
