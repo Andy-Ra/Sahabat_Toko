@@ -2,9 +2,6 @@ package com.andyra.sahabattoko.tampilmenu;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -13,27 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.andyra.sahabattoko.MainActivity;
+import com.andyra.sahabattoko.ListBarangAdapter;
 import com.andyra.sahabattoko.R;
-import com.andyra.sahabattoko.Registrasi;
-import com.andyra.sahabattoko.model.BarangMasukModel;
+import com.andyra.sahabattoko.model.TransaksiModel;
+import com.andyra.sahabattoko.model.ListBarangModel;
+import com.andyra.sahabattoko.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -42,12 +35,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 public class FragmentPembelianBarang extends Fragment {
     private TextInputLayout edtanggal, ednama, edjmlh,
@@ -59,8 +52,7 @@ public class FragmentPembelianBarang extends Fragment {
     private String strtanggal, strnama, strkategori, strjmlh,
             strbeli, strsbelin, strjual;
     private Date datetanggal;
-    private long maxid = 0;
-    private int intbeli, intjmlh ,intsatuan;
+    private int intbeli, intjmlh ,intsatuan, intlama, intstok;
     private String uid;
 
     @Override
@@ -240,37 +232,76 @@ public class FragmentPembelianBarang extends Fragment {
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseReference id = FirebaseDatabase.getInstance().getReference("barang_masuk")
                     .child(uid);
-            id.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                        maxid = snapshot.getChildrenCount();
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            TransaksiModel TBM = new TransaksiModel(datetanggal, strnama, strkategori,
+                    Integer.parseInt(strjmlh), intsatuan,
+                    Integer.parseInt(strjual));
 
-                }
-            });
-
-            ;
-
-            BarangMasukModel BMM = new BarangMasukModel(datetanggal, strnama, strkategori,
-                                    Integer.parseInt(strjmlh), intsatuan,
-                                    Integer.parseInt(strjual));
-            id.child(String.valueOf(maxid+1)).setValue(BMM)
+            id.push().setValue(TBM)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(getActivity(), "Barang berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                        cek_barang();
                     }
                 }
             });
             pgtmbhbrg.setVisibility(View.GONE);
             btntmbhbrg.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void cek_barang(){
+        intlama = 0;
+        DatabaseReference drbarang = FirebaseDatabase.getInstance()
+            .getReference("list_barang").child(uid).child(strkategori+ "_" +strnama);
+        drbarang.addListenerForSingleValueEvent(new ValueEventListener(){
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ListBarangModel LBM = snapshot.getValue(ListBarangModel.class);
+                //jika data sudah ada
+                if (LBM != null){
+                    intlama = LBM.Stok;
+                    intstok = intjmlh + intlama;
+                    System.out.println(intlama);
+                    System.out.println(intjmlh);
+                    System.out.println(intstok);
+                    drbarang.child("Stok").setValue(intstok);
+                    Toast.makeText(getActivity(), "Barang Telah berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                }
+
+                //jika data barang masih kosong
+                else{
+                    hitungstok();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        btntmbhbrg.setVisibility(View.VISIBLE);
+    }
+
+    private void hitungstok() {
+        DatabaseReference drbarang = FirebaseDatabase.getInstance()
+                .getReference("list_barang").child(uid).child(strkategori+ "_" +strnama);
+
+        ListBarangModel LBM = new ListBarangModel(strnama, strkategori, Integer.parseInt(strjmlh));
+
+        drbarang.setValue(LBM)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(getActivity(), "Barang Telah berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+        pgtmbhbrg.setVisibility(View.GONE);
+        btntmbhbrg.setVisibility(View.VISIBLE);
     }
 
     private void resetnotif(){
