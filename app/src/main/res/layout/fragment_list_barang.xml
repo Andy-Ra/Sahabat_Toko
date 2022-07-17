@@ -36,10 +36,10 @@
             android:text="@string/title_stokhbrg"
             android:gravity="center"/>
     </LinearLayout>
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lvlistbrg"/>
+        android:id="@+id/rvlistbrg"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

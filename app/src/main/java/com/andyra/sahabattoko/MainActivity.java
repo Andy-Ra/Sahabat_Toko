@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.andyra.sahabattoko.model.UserModel;
+import com.andyra.sahabattoko.tampilmenu.FragmentHapusBarang;
 import com.andyra.sahabattoko.tampilmenu.FragmentListBarang;
 import com.andyra.sahabattoko.tampilmenu.FragmentPembelianBarang;
 import com.andyra.sahabattoko.tampilmenu.UbahPassword;
@@ -82,7 +83,12 @@ public class MainActivity extends AppCompatActivity
                         new FragmentListBarang()).commit();
                 break;
 
-            case R.id.nav_tmbh_trx:
+            case R.id.nav_hps_brg:
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
+                        new FragmentHapusBarang()).commit();
+                break;
+
+            case R.id.nav_beli:
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
                         new FragmentPembelianBarang()).commit();
                 break;

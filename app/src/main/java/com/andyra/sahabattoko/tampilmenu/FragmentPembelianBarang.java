@@ -272,7 +272,16 @@ public class FragmentPembelianBarang extends Fragment {
 
                 //jika data barang masih kosong
                 else{
-                    hitungstok();
+                    ListBarangModel LBMM = new ListBarangModel(strnama, strkategori, Integer.parseInt(strjmlh));
+                    drbarang.setValue(LBMM)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Barang Telah berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
             }
 
@@ -282,24 +291,6 @@ public class FragmentPembelianBarang extends Fragment {
             }
         });
 
-        btntmbhbrg.setVisibility(View.VISIBLE);
-    }
-
-    private void hitungstok() {
-        DatabaseReference drbarang = FirebaseDatabase.getInstance()
-                .getReference("list_barang").child(uid).child(strkategori+ "_" +strnama);
-
-        ListBarangModel LBM = new ListBarangModel(strnama, strkategori, Integer.parseInt(strjmlh));
-
-        drbarang.setValue(LBM)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getActivity(), "Barang Telah berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
         pgtmbhbrg.setVisibility(View.GONE);
         btntmbhbrg.setVisibility(View.VISIBLE);
     }

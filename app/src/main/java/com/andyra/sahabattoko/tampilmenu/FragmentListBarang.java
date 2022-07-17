@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +36,9 @@ import java.util.List;
 
 public class FragmentListBarang extends Fragment {
     TextView lvlistnull;
-    ListView lvlistbrg;
-    List<ListBarangModel> arlistbarang;
-    ListBarangModel LBM;
+    RecyclerView rvlistbrg;
+    ListBarangAdapter lbAdapter;
+    ArrayList<ListBarangModel> arlistbarang;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,11 +52,10 @@ public class FragmentListBarang extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.list_brg);
         lvlistnull = getActivity().findViewById(R.id.lvlistnull);
-        lvlistbrg = getActivity().findViewById(R.id.lvlistbrg);
+        rvlistbrg = getActivity().findViewById(R.id.rvlistbrg);
 
-        arlistbarang = new ArrayList<>();
         lvlistnull.setVisibility(View.VISIBLE);
-        lvlistbrg.setVisibility(View.GONE);
+        rvlistbrg.setVisibility(View.GONE);
 
         ConnectivityManager mconnectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         if(mconnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED &&
@@ -67,9 +68,17 @@ public class FragmentListBarang extends Fragment {
     }
 
     private void listbarang() {
+        rvlistbrg.setHasFixedSize(true);
+        rvlistbrg.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        arlistbarang = new ArrayList<>();
+        lbAdapter = new ListBarangAdapter(getActivity(), arlistbarang);
+        rvlistbrg.setAdapter(lbAdapter);
+
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference listbarang = FirebaseDatabase.getInstance().getReference("list_barang")
                 .child(uid);
+
         listbarang.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -81,22 +90,12 @@ public class FragmentListBarang extends Fragment {
 
                     System.out.println("ara" +LBM.Nama_barang);
                 }
-//                System.out.println(arlistbarang.size());
-//                if(arlistbarang.size() <= 0){
-//                    lvlistnull.setVisibility(View.VISIBLE);
-//                    lvlistbrg.setVisibility(View.GONE);
-//                }
-//                else{
-//                    lvlistnull.setVisibility(View.GONE);
-//                    lvlistbrg.setVisibility(View.VISIBLE);
-//                    ListBarangAdapter madapter = new ListBarangAdapter(getActivity(), arlistbarang);
-//                    lvlistbrg.setAdapter(madapter);
-//                }
 
                 lvlistnull.setVisibility(View.GONE);
-                lvlistbrg.setVisibility(View.VISIBLE);
-                ListBarangAdapter madapter = new ListBarangAdapter(getActivity(), arlistbarang);
-                lvlistbrg.setAdapter(madapter);
+                rvlistbrg.setVisibility(View.VISIBLE);
+
+                lbAdapter.notifyDataSetChanged();
+
             }
 
             @Override

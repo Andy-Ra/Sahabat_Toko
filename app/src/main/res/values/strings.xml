@@ -19,7 +19,8 @@
     <string name="title_hapus_brg">Hapus Barang</string>
 
     <string name="title_list_trx">Daftar Transaksi</string>
-    <string name="title_tambah_trx">Tambah Transaksi</string>
+    <string name="title_tbeli_trx">Tambah Transaksi Pembelian</string>
+    <string name="title_tjual_trx">Tambah Transaksi Penjualan</string>
     <string name="title_hapus_trx">Hapus Transaksi</string>
 
     <string name="title_ubah_sandi">Ubah Kata Sandi</string>
