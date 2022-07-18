@@ -45,6 +45,7 @@ public class FragmentHapusBarang extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(R.string.title_hapus_brg);
         sp_hkat = getActivity().findViewById(R.id.sp_hkat);
         sp_hnam = getActivity().findViewById(R.id.sp_hnama);
         tilstok = getActivity().findViewById(R.id.edhstok);
@@ -153,7 +154,7 @@ public class FragmentHapusBarang extends Fragment {
     }
 
     private void hapus_barang() {
-        if (sp_hkat.getSelectedItem().equals("Pilih Kategori") && sp_hnam.getSelectedItem().equals("Pilih Barang")){
+        if (sp_hkat.getSelectedItem().equals("Pilih Kategori") || sp_hnam.getSelectedItem().equals("Pilih Barang")){
             Toast.makeText(getActivity(), "Mohon Pilih Barang", Toast.LENGTH_SHORT).show();
         }
 

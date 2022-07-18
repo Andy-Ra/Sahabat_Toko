@@ -15,17 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.andyra.sahabattoko.ListBarangAdapter;
+import com.andyra.sahabattoko.ListTransaksiAdapter;
 import com.andyra.sahabattoko.R;
-import com.andyra.sahabattoko.model.ListBarangModel;
+import com.andyra.sahabattoko.model.TransaksiModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,35 +29,35 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class FragmentListBarang extends Fragment {
-    TextView lvlistnull;
-    RecyclerView rvlistbrg;
-    ListBarangAdapter lbAdapter;
-    ArrayList<ListBarangModel> arlistbarang;
+public class FragmentListTransaksi extends Fragment {
+    TextView lvbltrxnull;
+    RecyclerView rvblisttrx;
+    ListTransaksiAdapter lbtrx;
+    ArrayList<TransaksiModel> arlistbtrx;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_barang, container, false);
+        return inflater.inflate(R.layout.fragment_list_transaksi, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle(R.string.list_brg);
-        lvlistnull = getActivity().findViewById(R.id.lvlistnull);
-        rvlistbrg = getActivity().findViewById(R.id.rvlistbrg);
+        getActivity().setTitle(R.string.title_list_trx);
+        lvbltrxnull = getActivity().findViewById(R.id.lvbltrxnull);
+        rvblisttrx = getActivity().findViewById(R.id.rvblisttrx);
 
-        lvlistnull.setVisibility(View.VISIBLE);
-        rvlistbrg.setVisibility(View.GONE);
+        lvbltrxnull.setVisibility(View.VISIBLE);
+        rvblisttrx.setVisibility(View.GONE);
 
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(rvlistbrg.getContext(),
+
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(rvblisttrx.getContext(),
                 DividerItemDecoration.VERTICAL);
         mDividerItemDecoration.setDrawable(getActivity().getDrawable(R.drawable.rowrecycle));
-        rvlistbrg.addItemDecoration(mDividerItemDecoration);
+        rvblisttrx.addItemDecoration(mDividerItemDecoration);
 
         ConnectivityManager mconnectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         if(mconnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED &&
@@ -69,38 +65,35 @@ public class FragmentListBarang extends Fragment {
             Toast.makeText(getActivity(), "Periksa Koneksi Anda", Toast.LENGTH_SHORT).show();
         }
         else{
-            listbarang();
+            listbtrx();
         }
     }
 
-    private void listbarang() {
-        rvlistbrg.setHasFixedSize(true);
-        rvlistbrg.setLayoutManager(new LinearLayoutManager(getActivity()));
+    private void listbtrx() {
+        rvblisttrx.setHasFixedSize(true);
+        rvblisttrx.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        arlistbarang = new ArrayList<>();
-        lbAdapter = new ListBarangAdapter(getActivity(), arlistbarang);
-        rvlistbrg.setAdapter(lbAdapter);
+        arlistbtrx = new ArrayList<>();
+        lbtrx = new ListTransaksiAdapter(getActivity(), arlistbtrx);
+        rvblisttrx.setAdapter(lbtrx);
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference listbarang = FirebaseDatabase.getInstance().getReference("list_barang")
+        DatabaseReference listbtrx = FirebaseDatabase.getInstance().getReference("barang_masuk")
                 .child(uid);
 
-        listbarang.addValueEventListener(new ValueEventListener() {
+        listbtrx.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                arlistbarang.clear();
-                for (DataSnapshot barangsnap : snapshot.getChildren()){
-                        ListBarangModel LBM = snapshot.getValue(ListBarangModel.class);
-                        System.out.println(barangsnap.getValue().toString());
-                        arlistbarang.add(barangsnap.getValue(ListBarangModel.class));
-
-                    System.out.println("ara" +LBM.Nama_barang);
+                arlistbtrx.clear();
+                for (DataSnapshot trxsnap : snapshot.getChildren()){
+                    arlistbtrx.add(trxsnap.getValue(TransaksiModel.class));
+                    System.out.println(trxsnap.getValue(TransaksiModel.class));
                 }
 
-                lvlistnull.setVisibility(View.GONE);
-                rvlistbrg.setVisibility(View.VISIBLE);
+                lvbltrxnull.setVisibility(View.GONE);
+                rvblisttrx.setVisibility(View.VISIBLE);
 
-                lbAdapter.notifyDataSetChanged();
+                lbtrx.notifyDataSetChanged();
 
             }
 

@@ -7,6 +7,9 @@ public class TransaksiModel {
     public String Nama_barang, Kategori;
     public int Jumlah, Hrg_Beli_PerItem, Hrg_jual_PerItem;
 
+    public  TransaksiModel(){
+
+    }
     public TransaksiModel(Date tgl_beli, String Nama_barang, String kategori,
                           Integer jumlah, Integer biaya_beli_satuan, Integer harga_jual_satuan){
         this.Tgl_beli = tgl_beli;

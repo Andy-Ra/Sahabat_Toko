@@ -19,6 +19,7 @@ import com.andyra.sahabattoko.model.UserModel;
 import com.andyra.sahabattoko.tampilmenu.FragmentHapusBarang;
 import com.andyra.sahabattoko.tampilmenu.FragmentListBarang;
 import com.andyra.sahabattoko.tampilmenu.FragmentPembelianBarang;
+import com.andyra.sahabattoko.tampilmenu.FragmentTampilTransaksi;
 import com.andyra.sahabattoko.tampilmenu.UbahPassword;
 import com.google.android.material.navigation.NavigationView;
 
@@ -86,6 +87,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_hps_brg:
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
                         new FragmentHapusBarang()).commit();
+                break;
+
+            case R.id.nav_list_trx:
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
+                        new FragmentTampilTransaksi()).commit();
                 break;
 
             case R.id.nav_beli:

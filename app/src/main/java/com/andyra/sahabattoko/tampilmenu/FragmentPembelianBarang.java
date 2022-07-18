@@ -207,7 +207,7 @@ public class FragmentPembelianBarang extends Fragment {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(datetanggal);
             final int tahun = calendar.get(Calendar.YEAR);
-            final int bulan = calendar.get(Calendar.MONTH)+2;
+            final int bulan = calendar.get(Calendar.MONTH)+1;
             final int hari = calendar.get(Calendar.DAY_OF_MONTH);
             datetanggal = dateFormat.parse( hari + "/" + bulan + "/" + tahun);
 

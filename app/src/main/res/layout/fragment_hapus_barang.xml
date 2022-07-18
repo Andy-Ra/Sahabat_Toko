@@ -22,7 +22,6 @@
         android:layout_below="@+id/tvtitle_hapus_brg"
         android:layout_margin="25dp"
         android:orientation="vertical">
-
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
