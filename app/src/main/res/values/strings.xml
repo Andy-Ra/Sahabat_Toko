@@ -2,6 +2,7 @@
     <string name="app_name">Sahabat Toko</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="copyright">Copyright © 2022 Andy Ramadhan</string>
 
     <string name="title_daftar">Daftar</string>
     <string name="title_masuk">Masuk</string>
@@ -19,8 +20,10 @@
     <string name="title_hapus_brg">Hapus Barang</string>
 
     <string name="title_list_trx">Daftar Transaksi</string>
+    <string name="title_detail_trx">Detail Transaksi</string>
     <string name="title_tbeli_trx">Tambah Transaksi Pembelian</string>
     <string name="title_tjual_trx">Tambah Transaksi Penjualan</string>
+    <string name="title_ubah_trx">Ubah Transaksi</string>
     <string name="title_hapus_trx">Hapus Transaksi</string>
 
     <string name="title_ubah_sandi">Ubah Kata Sandi</string>
@@ -51,5 +54,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detailtentang">Aplikasi Sahabat Toko ini adalah sebuah aplikasi yang berguna untuk orang yang memiliki sebuah toko/usaha, aplikasi ini dibuat agar dapat membantu para pengusaha dalam mengatur keluar masuknya barang. Aplikasi ini juga dapat merekap daftar barang yang telah di daftarkan pada aplikasi serta daftar transaksi beli dan jual. Pada aplikasi ini juga terdapat fitur login yang dapat memudahkan para pengguna pada saat pengguna ingin memindahkan data pada smartphone lain </string>
+    <string name="detailtutor">Cara Pengguanaan \n 1. Harus melakukan Login terlebih dahulu agar mendapatkan hak akses \n 2. Pada halaman dashboard terdapat beberapa menu dengan memiliki fitur berbeda pada setiap menunya \n 3. Fitur Daftar Barang digunakan untuk menampilkan Barang yang sudah didaftarkan \n 4. Menu Hapus Barang digunakan untuk menghapus barang \n 5. Menu Daftar Transaksi digunakan untuk menampilkan daftar transaksi bpembelian dan penjualan \n 6. Menu Tambah Transaksi Pembelian digunakan untuk menambahkan transaksi pembelian \n 7. Menu Tambah transaksi penjualan digunakan untuk menambahkan transaksi penjualan \n 8. Menu Ubah Kata Sandi digunakan untuk mengubah kata sandi </string>
 
 </resources>

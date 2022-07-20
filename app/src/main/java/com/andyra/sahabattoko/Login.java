@@ -39,7 +39,6 @@ public class Login extends AppCompatActivity {
         btnlogin  = findViewById(R.id.btnlmasuk);
         btnregis  = findViewById(R.id.btnldaftar);
         pgmasuk = findViewById(R.id.pgmasuk);
-        TextView tvlgnlupa = findViewById(R.id.tvlgnlupa);
 
 
         edlgnemail = findViewById(R.id.edlgnemail);
@@ -67,13 +66,6 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cek();
-            }
-        });
-
-        tvlgnlupa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
             }
         });
     }

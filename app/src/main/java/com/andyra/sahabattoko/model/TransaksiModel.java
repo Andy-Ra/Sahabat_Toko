@@ -6,6 +6,7 @@ public class TransaksiModel {
     public Date Tgl_beli;
     public String Nama_barang, Kategori;
     public int Jumlah, Hrg_Beli_PerItem, Hrg_jual_PerItem;
+    private transient String kunci;
 
     public  TransaksiModel(){
 
@@ -18,5 +19,12 @@ public class TransaksiModel {
         this.Jumlah = jumlah;
         this.Hrg_Beli_PerItem = biaya_beli_satuan;
         this.Hrg_jual_PerItem = harga_jual_satuan;
+    }
+    public void setKey(String kunci) {
+        this.kunci = kunci;
+    }
+
+    public String getKey() {
+        return kunci;
     }
 }

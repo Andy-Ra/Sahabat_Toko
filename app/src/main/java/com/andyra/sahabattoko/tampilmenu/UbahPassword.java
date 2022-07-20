@@ -48,7 +48,7 @@ public class UbahPassword extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle(R.string.list_brg);
+        getActivity().setTitle(R.string.title_ubah_sandi);
         ededpass = getActivity().findViewById(R.id.ededpass);
         ednewpass = getActivity().findViewById(R.id.ednewpass);
         ednewpass2 = getActivity().findViewById(R.id.ednewpass2);

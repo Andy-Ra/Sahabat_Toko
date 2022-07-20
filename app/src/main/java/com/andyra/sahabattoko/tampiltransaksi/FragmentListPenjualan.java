@@ -1,4 +1,4 @@
-package com.andyra.sahabattoko.tampilmenu;
+package com.andyra.sahabattoko.tampiltransaksi;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -18,8 +18,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andyra.sahabattoko.ListJualAdapter;
 import com.andyra.sahabattoko.ListTransaksiAdapter;
 import com.andyra.sahabattoko.R;
+import com.andyra.sahabattoko.model.JualModel;
 import com.andyra.sahabattoko.model.TransaksiModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,34 +32,36 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FragmentListTransaksi extends Fragment {
-    TextView lvbltrxnull;
-    RecyclerView rvblisttrx;
-    ListTransaksiAdapter lbtrx;
-    ArrayList<TransaksiModel> arlistbtrx;
+public class FragmentListPenjualan extends Fragment {
+    TextView lvjtrxnull;
+    RecyclerView rvjlist;
+    ListJualAdapter ljtrx;
+    ArrayList<JualModel> arlistjtrx;
+    View mview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_transaksi, container, false);
+        mview = inflater.inflate(R.layout.fragment_list_penjualan, container, false);
+        return(mview);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle(R.string.title_list_trx);
-        lvbltrxnull = getActivity().findViewById(R.id.lvbltrxnull);
-        rvblisttrx = getActivity().findViewById(R.id.rvblisttrx);
+        getActivity().setTitle("Daftar Transaksi Penjualan");
+        lvjtrxnull = getActivity().findViewById(R.id.lvjltrxnullj);
+        rvjlist = getActivity().findViewById(R.id.rvjlisttrxj);
 
-        lvbltrxnull.setVisibility(View.VISIBLE);
-        rvblisttrx.setVisibility(View.GONE);
+        lvjtrxnull.setVisibility(View.VISIBLE);
+        rvjlist.setVisibility(View.GONE);
 
 
-        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(rvblisttrx.getContext(),
+        DividerItemDecoration mDividerItemDecoration = new DividerItemDecoration(rvjlist.getContext(),
                 DividerItemDecoration.VERTICAL);
         mDividerItemDecoration.setDrawable(getActivity().getDrawable(R.drawable.rowrecycle));
-        rvblisttrx.addItemDecoration(mDividerItemDecoration);
+        rvjlist.addItemDecoration(mDividerItemDecoration);
 
         ConnectivityManager mconnectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         if(mconnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED &&
@@ -65,35 +69,36 @@ public class FragmentListTransaksi extends Fragment {
             Toast.makeText(getActivity(), "Periksa Koneksi Anda", Toast.LENGTH_SHORT).show();
         }
         else{
-            listbtrx();
+            listjtrx();
         }
     }
 
-    private void listbtrx() {
-        rvblisttrx.setHasFixedSize(true);
-        rvblisttrx.setLayoutManager(new LinearLayoutManager(getActivity()));
+    private void listjtrx() {
+        rvjlist.setHasFixedSize(true);
+        rvjlist.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        arlistbtrx = new ArrayList<>();
-        lbtrx = new ListTransaksiAdapter(getActivity(), arlistbtrx);
-        rvblisttrx.setAdapter(lbtrx);
+        arlistjtrx = new ArrayList<>();
+        ljtrx = new ListJualAdapter(getActivity(), arlistjtrx);
+        rvjlist.setAdapter(ljtrx);
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference listbtrx = FirebaseDatabase.getInstance().getReference("barang_masuk")
+        DatabaseReference listjtrx = FirebaseDatabase.getInstance().getReference("barang_keluar")
                 .child(uid);
 
-        listbtrx.addValueEventListener(new ValueEventListener() {
+        listjtrx.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                arlistbtrx.clear();
+                arlistjtrx.clear();
+                System.out.println("snap" +snapshot);
                 for (DataSnapshot trxsnap : snapshot.getChildren()){
-                    arlistbtrx.add(trxsnap.getValue(TransaksiModel.class));
-                    System.out.println(trxsnap.getValue(TransaksiModel.class));
+                    arlistjtrx.add(trxsnap.getValue(JualModel.class));
+                    System.out.println(trxsnap.getValue(JualModel.class));
                 }
 
-                lvbltrxnull.setVisibility(View.GONE);
-                rvblisttrx.setVisibility(View.VISIBLE);
+                lvjtrxnull.setVisibility(View.GONE);
+                rvjlist.setVisibility(View.VISIBLE);
 
-                lbtrx.notifyDataSetChanged();
+                ljtrx.notifyDataSetChanged();
 
             }
 
@@ -101,7 +106,6 @@ public class FragmentListTransaksi extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-
     }
+
 }

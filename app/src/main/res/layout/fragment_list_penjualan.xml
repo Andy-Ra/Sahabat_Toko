@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tampiltransaksi.FragmentListTransaksi"
+    tools:context=".tampiltransaksi.FragmentListPenjualan"
     android:layout_marginTop="25dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/lylist_trx"
+        android:id="@+id/lyjlist_trx"
         android:layout_marginBottom="10dp">
         <TextView
             android:layout_width="0dp"
@@ -48,18 +48,24 @@
             android:layout_weight=".2"
             android:text="Harga Peritem"
             android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:text="Total Harga"
+            android:gravity="center"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rvblisttrx"
-        android:layout_below="@id/lylist_trx"/>
+        android:id="@+id/rvjlisttrxj"
+        android:layout_below="@id/lyjlist_trx"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Data Masih Kosong"
         android:gravity="center"
-        android:id="@+id/lvbltrxnull"
-        android:layout_below="@id/lylist_trx"/>
+        android:id="@+id/lvjltrxnullj"
+        android:layout_below="@id/lyjlist_trx"/>
 
 </RelativeLayout>

@@ -28,10 +28,6 @@
                 android:id="@+id/nav_jual"
                 android:icon="@drawable/ic_baseline_sell_12"
                 android:title="@string/title_tjual_trx" />
-            <item
-                android:id="@+id/nav_hps_trx"
-                android:icon="@drawable/ic_baseline_delete_sweep_12"
-                android:title="@string/title_hapus_trx" />
         </menu>
     </item>
     <item android:title="Lainnya">
@@ -44,6 +40,11 @@
                 android:id="@+id/nav_tentang"
                 android:icon="@drawable/ic_baseline_list_alt_12"
                 android:title="@string/title_tentang_apk" />
+
+            <item
+                android:id="@+id/nav_penggunaan"
+                android:icon="@drawable/ic_baseline_help_24"
+                android:title="Penggunaan Aplikasi" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_baseline_logout_12"

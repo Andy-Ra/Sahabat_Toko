@@ -45,6 +45,7 @@ public class FragmentHapusBarang extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.title_hapus_brg);
         sp_hkat = getActivity().findViewById(R.id.sp_hkat);
         sp_hnam = getActivity().findViewById(R.id.sp_hnama);

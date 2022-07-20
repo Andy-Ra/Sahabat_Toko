@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_baseline_local_grocery_store_12"
         android:title="Pembelian"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/m_trxj"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_sell_12"
         android:title= "Penjualan"/>

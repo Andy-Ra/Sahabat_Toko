@@ -7,19 +7,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andyra.sahabattoko.model.UserModel;
 import com.andyra.sahabattoko.tampilmenu.FragmentHapusBarang;
 import com.andyra.sahabattoko.tampilmenu.FragmentListBarang;
 import com.andyra.sahabattoko.tampilmenu.FragmentPembelianBarang;
-import com.andyra.sahabattoko.tampilmenu.FragmentTampilTransaksi;
+import com.andyra.sahabattoko.tampilmenu.FragmentPenjualanBarang;
+import com.andyra.sahabattoko.tampiltransaksi.FragmentDetailTransaksi;
+import com.andyra.sahabattoko.tampiltransaksi.FragmentTampilTransaksi;
 import com.andyra.sahabattoko.tampilmenu.UbahPassword;
 import com.google.android.material.navigation.NavigationView;
 
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_list_brg:
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
                         new FragmentListBarang()).commit();
+                getSupportFragmentManager().beginTransaction().addToBackStack(null);
                 break;
 
             case R.id.nav_hps_brg:
@@ -99,11 +104,25 @@ public class MainActivity extends AppCompatActivity
                         new FragmentPembelianBarang()).commit();
                 break;
 
+            case R.id.nav_jual:
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
+                        new FragmentPenjualanBarang()).commit();
+                break;
+
             case R.id.nav_ubah_sandi:
                 getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
                         new UbahPassword()).commit();
                 break;
 
+            case R.id.nav_penggunaan:
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
+                        new PenggunaanAplikasi()).commit();
+                break;
+
+            case R.id.nav_tentang:
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
+                        new TentangAplikasi()).commit();
+                break;
             case R.id.nav_logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MainActivity.this, Login.class));
@@ -113,13 +132,23 @@ public class MainActivity extends AppCompatActivity
                 moveTaskToBack(true);
                 break;
         }
+        System.out.println("itemmm " +mitem);
         m_maindrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void tampil_awal() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
-                new FragmentListBarang()).commit();
+        if(getIntent().getExtras() == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
+                    new FragmentListBarang()).commit();
+        }
+        else{
+            String ara = getIntent().getStringExtra("aksi_pindaahh");
+            if(ara.equals("detail tbeli")) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainfLayout,
+                        new FragmentDetailTransaksi()).commit();
+            }
+        }
     }
 
     private void ambil_user(){

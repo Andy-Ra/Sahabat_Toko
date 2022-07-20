@@ -1,4 +1,4 @@
-package com.andyra.sahabattoko.tampilmenu;
+package com.andyra.sahabattoko.tampiltransaksi;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
@@ -20,13 +21,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.andyra.sahabattoko.ListBarangAdapter;
 import com.andyra.sahabattoko.R;
-import com.andyra.sahabattoko.model.TransaksiModel;
 import com.andyra.sahabattoko.model.ListBarangModel;
-import com.andyra.sahabattoko.model.UserModel;
+import com.andyra.sahabattoko.model.TransaksiModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -37,16 +37,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
-public class FragmentPembelianBarang extends Fragment {
-    private TextInputLayout edtanggal, ednama, edjmlh,
-            edbeli, edsbelin, edjual;
-    private ImageView btntglbeli;
-    private AutoCompleteTextView attktgr;
+public class FragmentDetailTransaksi extends Fragment {
+    private TextInputLayout edbbtglbeli, edbbnmbrg, edbbjmlhbrg,
+            edbbbeli, edbbbelisatu, edbbjual;
+    private ImageView btnbbtglbeli;
+    private AutoCompleteTextView ddaktgr;
     private Button btntmbhbrg;
     private ProgressBar pgtmbhbrg;
     private String strtanggal, strnama, strkategori, strjmlh,
@@ -58,81 +56,43 @@ public class FragmentPembelianBarang extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_pembelian_barang, container, false);
+        return inflater.inflate(R.layout.fragment_detail_transaksi, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        edtanggal = getActivity().findViewById(R.id.edttglbeli);
-        ednama = getActivity().findViewById(R.id.edtnmbrg);
-        edjmlh = getActivity().findViewById(R.id.edtjmlhbrg);
-        edbeli = getActivity().findViewById(R.id.edtbeli);
-        edsbelin = getActivity().findViewById(R.id.edtbelisatu);
-        edjual = getActivity().findViewById(R.id.edtjual);
+        edbbtglbeli = getActivity().findViewById(R.id.edbbtglbeli);
+        edbbnmbrg = getActivity().findViewById(R.id.edbbnmbrg);
+        edbbjmlhbrg = getActivity().findViewById(R.id.edbbjmlhbrg);
+        edbbbeli = getActivity().findViewById(R.id.edbbbeli);
+        edbbbelisatu = getActivity().findViewById(R.id.edbbbelisatu);
+        edbbjual = getActivity().findViewById(R.id.edbbjual);
 
-        attktgr = getActivity().findViewById(R.id.attktgr);
-        btntglbeli = getActivity().findViewById(R.id.btntglbeli);
-        btntmbhbrg = getActivity().findViewById(R.id.btntmbhbrg);
-        pgtmbhbrg = getActivity().findViewById(R.id.pgtmbhbrg);
+        ddaktgr = getActivity().findViewById(R.id.ddaktgr);
+        btnbbtglbeli = getActivity().findViewById(R.id.btnbbtglbeli);
 
-        pgtmbhbrg.setVisibility(View.GONE);
-        btntmbhbrg.setVisibility(View.VISIBLE);
 
         resetdata();
+        resetnotif();
+        ambildata();
         deklarasi();
         settanggal();
-        resetnotif();
         hitungsatu();
 
-        btntmbhbrg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datetanggal = null;
-                tanggal();
-                resetnotif();
-                if(datetanggal == null|| strnama.isEmpty() == true || strkategori.isEmpty() == true ||
-                        !strjmlh.matches("[0-9]+") || Integer.parseInt(strjmlh) < 1 ||
-                        !strbeli.matches("[0-9]+") || Integer.parseInt(strbeli) < 1 ||
-                        !strjual.matches("[0-9]+") || Integer.parseInt(strjual) < 1 ){
-                    if(datetanggal == null){
-                        edtanggal.getEditText().setError("Format tanggal (dd/MM/YYY)");
-                    }
-                    if(strnama.isEmpty() == true){
-                        ednama.getEditText().setError("Masukkan Nama Barang");
-                    }
-
-                    if(strkategori.isEmpty() == true){
-                        attktgr.setError("Masukkan Kategori Barang");
-                    }
-                    if(!strjmlh.matches("[0-9]+") || Integer.parseInt(strjmlh) < 1){
-                        edjmlh.getEditText().setError("Masukkan Hanya Angka lebih dari 0");
-                    }
-                    if(!strbeli.matches("[0-9]+") || Integer.parseInt(strbeli) < 1){
-                        edbeli.getEditText().setError("Masukkan Hanya Angka lebih dari 0");
-                    }
-                    if(!strjual.matches("[0-9]+") || Integer.parseInt(strjual) < 1){
-                        edjual.getEditText().setError("Masukkan Hanya Angka lebih dari 0");
-                    }
-                }
-                else {
-                    inputdata();
-                }
-            }
-        });
     }
+
 
     private void deklarasi() {
-        strtanggal = edtanggal.getEditText().getText().toString();
-        strnama = ednama.getEditText().getText().toString();
-        strkategori = attktgr.getText().toString();
-        strjmlh = edjmlh.getEditText().getText().toString();
-        strbeli = edbeli.getEditText().getText().toString();
-        strsbelin = edsbelin.getEditText().getText().toString();
-        strjual = edjual.getEditText().getText().toString();
+        strtanggal = edbbtglbeli.getEditText().getText().toString();
+        strnama = edbbnmbrg.getEditText().getText().toString();
+        strkategori = ddaktgr.getText().toString();
+        strjmlh = edbbjmlhbrg.getEditText().getText().toString();
+        strbeli = edbbbeli.getEditText().getText().toString();
+        strsbelin = edbbbelisatu.getEditText().getText().toString();
+        strjual = edbbjual.getEditText().getText().toString();
     }
     private void hitungsatu(){
-        edjmlh.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edbbjmlhbrg.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 deklarasi();
@@ -141,12 +101,12 @@ public class FragmentPembelianBarang extends Fragment {
                     persatu();
                 }
                 else{
-                    edsbelin.getEditText().setText("0");
+                    edbbbelisatu.getEditText().setText("0");
                 }
             }
         });
 
-        edbeli.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edbbbeli.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 deklarasi();
@@ -155,10 +115,55 @@ public class FragmentPembelianBarang extends Fragment {
                     persatu();
                 }
                 else{
-                    edsbelin.getEditText().setText("0");
+                    edbbbelisatu.getEditText().setText("0");
                 }
             }
         });
+    }
+
+
+    private void ambildata() {
+        if(getActivity().getIntent().getExtras() != null){
+            String ara = getActivity().getIntent().getStringExtra("aksi_nama");
+            System.out.println("key" +ara);
+
+            edbbnmbrg.getEditText().setText(ara);
+//            if(!ara.isEmpty()) {
+//                ConnectivityManager mconnectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+//                if (mconnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED &&
+//                        mconnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED) {
+//                    Toast.makeText(getActivity(), "Periksa Koneksi Anda", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                    DatabaseReference ambiltrx = FirebaseDatabase.getInstance().getReference("barang_masuk")
+//                            .child(uid).child(ara);
+//
+//                    ambiltrx.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            TransaksiModel TM = snapshot.getValue(TransaksiModel.class);
+//                            System.out.println("ara" +ara);
+//                                System.out.println(TM);
+//                                int Total = TM.Jumlah * TM.Hrg_Beli_PerItem;
+//                                edbbtglbeli.getEditText().setText("TM");
+//                                edbbnmbrg.getEditText().setText(TM.Nama_barang);
+//                                ddaktgr.setText(TM.Kategori);
+//                                edbbjmlhbrg.getEditText().setText(String.valueOf(TM.Jumlah));
+//                                edbbbeli.getEditText().setText(String.valueOf(Total));
+//                                edbbbelisatu.getEditText().setText(String.valueOf(TM.Hrg_Beli_PerItem));
+//                                edbbjual.getEditText().setText(String.valueOf(TM.Hrg_jual_PerItem));
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+//                }
+//            }
+
+            }
+
     }
     private void settanggal() {
         Calendar calendar = Calendar.getInstance();
@@ -167,7 +172,7 @@ public class FragmentPembelianBarang extends Fragment {
         final int hari = calendar.get(Calendar.DAY_OF_MONTH);
 
         //jika tombol tanggal ditekan
-        btntglbeli.setOnClickListener(new View.OnClickListener() {
+        btnbbtglbeli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -184,7 +189,7 @@ public class FragmentPembelianBarang extends Fragment {
                             bulan = "0"+bulan;
                         }
                         strtanggal = hari + "/" + bulan + "/" + i;
-                        edtanggal.getEditText().setText(strtanggal);
+                        edbbtglbeli.getEditText().setText(strtanggal);
                     }
                 }, tahun, bulan, hari);
                 datePickerDialog.show();
@@ -195,7 +200,7 @@ public class FragmentPembelianBarang extends Fragment {
     private void persatu(){
         if(intbeli > 0 && intjmlh > 0){
             intsatuan = intbeli / intjmlh;
-            edsbelin.getEditText().setText(String.valueOf(intsatuan));
+            edbbbelisatu.getEditText().setText(String.valueOf(intsatuan));
         }
     }
     private void tanggal(){
@@ -219,14 +224,10 @@ public class FragmentPembelianBarang extends Fragment {
 
 
     private void inputdata() {
-        pgtmbhbrg.setVisibility(View.VISIBLE);
-        btntmbhbrg.setVisibility(View.GONE);
         tanggal();
         ConnectivityManager mconnectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         if(mconnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.DISCONNECTED &&
                 mconnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.DISCONNECTED){
-            pgtmbhbrg.setVisibility(View.GONE);
-            btntmbhbrg.setVisibility(View.VISIBLE);
             Toast.makeText(getActivity(), "Periksa Koneksi Anda", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -240,22 +241,20 @@ public class FragmentPembelianBarang extends Fragment {
 
             id.push().setValue(TBM)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        cek_barang();
-                    }
-                }
-            });
-            pgtmbhbrg.setVisibility(View.GONE);
-            btntmbhbrg.setVisibility(View.VISIBLE);
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                cek_barang();
+                            }
+                        }
+                    });
         }
     }
 
     private void cek_barang(){
         intlama = 0;
         DatabaseReference drbarang = FirebaseDatabase.getInstance()
-            .getReference("list_barang").child(uid).child(strkategori+ "_" +strnama);
+                .getReference("list_barang").child(uid).child(strkategori+ "_" +strnama);
         drbarang.addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -275,14 +274,14 @@ public class FragmentPembelianBarang extends Fragment {
                 else{
                     ListBarangModel LBMM = new ListBarangModel(strnama, strkategori, Integer.parseInt(strjmlh));
                     drbarang.setValue(LBMM)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(getActivity(), "Barang Telah berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(getActivity(), "Barang Telah berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
             }
 
@@ -292,17 +291,15 @@ public class FragmentPembelianBarang extends Fragment {
             }
         });
 
-        pgtmbhbrg.setVisibility(View.GONE);
-        btntmbhbrg.setVisibility(View.VISIBLE);
     }
 
     private void resetnotif(){
-        edtanggal.getEditText().setError(null);
-        ednama.getEditText().setError(null);
-        attktgr.setError(null);
-        edjmlh.getEditText().setError(null);
-        edbeli.getEditText().setError(null);
-        edjual.getEditText().setError(null);
+        edbbtglbeli.getEditText().setError(null);
+        edbbnmbrg.getEditText().setError(null);
+        edbbnmbrg.getEditText().setError(null);
+        edbbjmlhbrg.getEditText().setError(null);
+        edbbbeli.getEditText().setError(null);
+        edbbjual.getEditText().setError(null);
     }
 
     private void resetdata(){
@@ -316,12 +313,12 @@ public class FragmentPembelianBarang extends Fragment {
         strsbelin = "";
         strjual = "";
 
-        edtanggal.getEditText().setText("");
-        ednama.getEditText().setText("");
-        attktgr.setText("");
-        edjmlh.getEditText().setText("");
-        edbeli.getEditText().setText("");
-        edsbelin.getEditText().setText("");
-        edjual.getEditText().setText("");
+        edbbtglbeli.getEditText().setText("");
+        edbbnmbrg.getEditText().setText("");
+        ddaktgr.setText("");
+        edbbjmlhbrg.getEditText().setText("");
+        edbbbeli.getEditText().setText("");
+        edbbbelisatu.getEditText().setText("");
+        edbbjual.getEditText().setText("");
     }
 }

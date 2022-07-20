@@ -1,4 +1,4 @@
-package com.andyra.sahabattoko.tampilmenu;
+package com.andyra.sahabattoko.tampiltransaksi;
 
 import android.os.Bundle;
 
@@ -36,6 +36,10 @@ public class FragmentTampilTransaksi extends Fragment implements BottomNavigatio
         switch (item.getItemId()){
             case R.id.m_trxb:
                 fragment = new FragmentListTransaksi();
+                break;
+
+            case R.id.m_trxj:
+                fragment = new FragmentListPenjualan();
                 break;
         }
         return tampil(fragment);
